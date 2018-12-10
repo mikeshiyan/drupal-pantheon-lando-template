@@ -1,0 +1,11 @@
+path:
+  - ./web/modules/custom/
+  - ./web/profiles/custom/
+  - ./web/themes/custom/
+  - ./drush/Commands/custom/
+jobs: 10
+extensions:
+  - php
+  - inc
+  - module
+  - theme

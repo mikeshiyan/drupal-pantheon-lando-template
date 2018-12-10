@@ -1,0 +1,18 @@
+name:
+recipe: pantheon
+config:
+  framework: drupal8
+  env: dev
+tooling:
+  drush:
+    service: appserver
+    cmd: /app/vendor/bin/drush
+  phplint:
+    service: appserver
+    cmd: /app/vendor/bin/phplint
+  phpcs:
+    service: appserver
+    cmd: /app/vendor/bin/phpcs
+  phpunit:
+    service: appserver
+    cmd: /app/vendor/bin/phpunit
