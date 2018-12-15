@@ -36,19 +36,18 @@ export SITE_LABEL="My New Shiny Project"
 export MACHINE_TOKEN="my_pantheon_machine_token"
 
 terminus auth:login --machine-token=$MACHINE_TOKEN
-```
-
-The following command may complain that the site name is taken. In that case,
-try it with another name instead of the `$SITE_NAME`, and then on success
-re-export the `SITE_NAME` var with a new value.
-
-```
 terminus site:create $SITE_NAME "$SITE_LABEL" empty
+```
 
-composer create-project shiyan/drupal-pantheon-lando-template:dev-master $SITE_NAME
+The last command may complain that the site name is taken. In that case, try it
+with another name instead of the `$SITE_NAME`, and then on success re-export the
+`SITE_NAME` var with a new value.
+
+```
+composer create-project --remove-vcs shiyan/drupal-pantheon-lando-template:dev-master $SITE_NAME
 cd $SITE_NAME
 
-lando init --recipe=pantheon
+lando init --recipe=pantheon --pantheon-auth=$MACHINE_TOKEN --pantheon-site=$SITE_NAME
 
 git init
 git add --all
@@ -67,6 +66,10 @@ git push --force pantheon master
 git reset HEAD^1 && git checkout -- .gitignore
 terminus drush $SITE_NAME.dev -- site:install --yes
 ```
+
+If you see a message `The drush command 'site:install' could not be found`, wait
+a bit - remote server needs to relink from default drush to the one in your
+vendor dir. Then retry.
 
 Start the project locally.
 
