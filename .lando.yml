@@ -3,6 +3,15 @@ recipe: pantheon
 config:
   framework: drupal8
   env: dev
+services:
+  appserver:
+    run:
+      - mkdir -p ~/.terminus/plugins
+      - git clone git@github.com:pantheon-systems/terminus-aliases-plugin.git ~/.terminus/plugins/terminus-aliases-plugin
+      - composer install --no-dev -n -o -d ~/.terminus/plugins/terminus-aliases-plugin
+events:
+  pre-pull:
+    - terminus alpha:aliases
 tooling:
   drush:
     service: appserver
