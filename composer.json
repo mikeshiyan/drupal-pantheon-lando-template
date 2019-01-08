@@ -41,8 +41,8 @@
     },
     "scripts": {
         "build-assets": [
-            "@prepare-for-pantheon",
-            "composer install --optimize-autoloader --no-dev"
+            "composer install --optimize-autoloader --no-dev",
+            "@prepare-for-pantheon"
         ],
         "prepare-for-pantheon": "DrupalProject\\composer\\ScriptHandler::prepareForPantheon",
         "post-install-cmd": [
