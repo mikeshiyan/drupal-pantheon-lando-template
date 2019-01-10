@@ -54,28 +54,18 @@ git add --all
 git commit --message="Started project."
 ```
 
-Push code and install the site on Pantheon.
-
-```
-terminus connection:set $SITE_NAME.dev git
-composer prepare-for-pantheon
-git add --all
-git commit --message="Added everything for Pantheon."
-git remote add pantheon $(terminus connection:info $SITE_NAME.dev --field=git_url)
-git push --force pantheon master
-git reset HEAD^1 && git checkout -- .gitignore
-terminus drush $SITE_NAME.dev -- site:install --yes
-```
-
-If you see a message `The drush command 'site:install' could not be found`, wait
-a bit - remote server needs to relink from default drush to the one in your
-vendor dir. Then retry.
-
 Start the project locally.
 
 ```
 lando start
 lando terminus auth:login --machine-token=$MACHINE_TOKEN
-lando pull --code=none --database=dev --files=dev
-lando drush cache:rebuild
+lando drush site:install --yes
+```
+
+Then deploy it to Pantheon.
+
+```
+lando deploy-code
+lando push --code=none --database=dev --files=dev
+terminus drush $SITE_NAME.dev -- cache:rebuild
 ```
